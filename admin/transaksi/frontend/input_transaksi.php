@@ -168,11 +168,11 @@ include('../../../conn.php');
                                             $q2 = "SELECT * FROM tbl_cart";
                                             $run2 = mysqli_query($conn, $q2);
                                             ?>
-                                            <div style="background-color: #f0f1f2;" class="card col-4">
-                                                <div style="margin-left: 20px;">
+                                            
+                                                <div class="mb-5">
 
                                                     <label style="margin-top: 10px;" for="nama" class="form-label">Nama tindakan</label>
-                                                    <div class="mb-3">
+                                                    <div >
                                                         <select style="min-height: 30px; width: 200px; padding-left: 8px;" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' class="form-select" id="idtin" name="idtin" required>
                                                             <?php
                                                             while ($data = mysqli_fetch_array($run)) {
@@ -184,7 +184,7 @@ include('../../../conn.php');
                                                     </div>
                                                     <button <?php echo mysqli_num_rows($run2) == 2 ? 'disabled' : '' ?> style=" width: 50px; margin-left: 150px;margin-bottom: 10px;  font-size: 14px;" type="submit" class="btn btn-success">Add</button>
                                                 </div>
-                                            </div>
+                                            
                                         </form>
 
                                         <form method="post" action="../backend/insert_transaksi.php">
@@ -201,7 +201,6 @@ include('../../../conn.php');
                                                     <input style="margin-left: 10px;width: 50px; font-weight: bold; color: red;" readonly="true" type="number" class="form-control-sm" id="idTran" name="idTran" value="<?php echo ($data['Auto_increment'])  ?>" required>
                                                 <?php } ?>
                                             </div>
-
                                             <label style="margin-top: 10px;" for="nama" class="form-label">Nama pasien</label>
                                             <div class="mb-3">
                                                 <select style="min-height: 30px; width: 200px; padding-left: 8px;" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' class="form-select" id="nampas" name="nampas" required>
@@ -216,12 +215,19 @@ include('../../../conn.php');
                                                 <label for="nama" class="form-label">Jumlah uang</label>
                                                 <input type="number" class="form-control" id="uang" name="uang" placeholder="Masukkan jumlah uang" oninput="getVal()" required>
                                             </div>
+                                            <div>
+                                                <label for="jenisKelamin" class="form-label">Metode pembayaran</label>
+                                                <select style="margin-left: 10px;" class="form-select" id="pay" name="pay" required>
+                                                    <option value="Tunai">Tunai</option>
+                                                    <option value="Non tunai">Non tunai</option>
+                                                </select>
+                                            </div>
                                             <div class="mb-3">
                                                 <label for="pesan" class="form-label">Keterangan</label>
                                                 <textarea class="form-control" id="ket" name="ket" rows="4" placeholder="Masukkan keterangan" required></textarea>
                                             </div>
 
-                                            <button style="margin-left: 92%; margin-bottom: 20px;" type="submit" class="btn btn-primary">Kirim</button>
+                                            <button  style=" float: right;  margin-bottom: 20px;" type="submit" class="btn btn-primary">Kirim</button>
                                         </form>
                                     </div>
                                     <!-- /.card-body -->
@@ -549,7 +555,7 @@ include('../../../conn.php');
                 confirmButtonText: 'Yaa',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    
+
                     window.location = "../../../index.php";
                 }
             })

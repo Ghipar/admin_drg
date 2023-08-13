@@ -170,7 +170,7 @@ include('../../../conn.php');
                                                 <label for="pesan" class="form-label">Keterangan</label>
                                                 <textarea class="form-control" id="ket" name="ket" rows="4" placeholder="Masukkan keterangan" required></textarea>
                                             </div>
-                                            <button style="margin-left: 95%;" type="submit" class="btn btn-primary">Kirim</button>
+                                            <button style=" float: right;" type="submit" class="btn btn-primary">Kirim</button>
                                         </form>
                                     </div>
                                     <!-- /.card-body -->

@@ -173,6 +173,10 @@ include('../../../conn.php');
                                             ?>
                                             <?php while ($data = mysqli_fetch_array($run)) { ?>
                                                 <div class="mb-3">
+                                                    <label for="nama" class="form-label">No rekam medis</label>
+                                                    <input style="text-transform:uppercase" type="text" class="form-control" id="rekme" name="rekme" placeholder="Masukkan no rekam medis" value="<?php echo $data['no_rekme'] ?>" required>
+                                                </div>
+                                                <div class="mb-3">
                                                     <label for="nama" class="form-label">Nama</label>
                                                     <input type="text" class="form-control" id="nama_pasien" name="nama_pasien" placeholder="Masukkan nama" value="<?php echo $data['nama_pasien'] ?>" required>
                                                 </div>
@@ -195,7 +199,7 @@ include('../../../conn.php');
                                                         <option <?php echo $data['jenis_kelamin'] == 'perempuan' ? 'selected' : '' ?> value="perempuan">Perempuan</option>
                                                     </select>
                                                 </div>
-                                                <button style="margin-left: 95%;" type="submit" class="btn btn-primary toastrDefaultSuccess">Kirim
+                                                <button style=" float: right;" type="submit" class="btn btn-primary toastrDefaultSuccess">Kirim
 
                                                     <?php
 
@@ -312,7 +316,7 @@ include('../../../conn.php');
         function out() {
             Swal.fire({
                 title: 'Anda yakin ingin logout?',
-               
+
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -325,7 +329,7 @@ include('../../../conn.php');
             })
         }
     </script>
-   
+
 </body>
 
 </html>

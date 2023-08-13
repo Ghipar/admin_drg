@@ -4,6 +4,7 @@ include('../../../conn.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nampas = $_POST["nama_pasien"];
+    $rekme = $_POST["rekme"];
     $hp = $_POST["hp"];
     $almt = $_POST["almt"];
     $tgl = $_POST["tgl_periksa"];
@@ -11,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_GET["id"];
 
     // You should validate and sanitize the input here
-    $q = "UPDATE `tbl_pasien` SET `nama_pasien`='$nampas',`no_hp`='$hp',`alamat`='$almt',`tgl_periksa`='$tgl',`jenis_kelamin`='$jenkel' WHERE id_pasien = '$id'";
+    $q = "UPDATE `tbl_pasien` SET `nama_pasien`='$nampas',`no_hp`='$hp',`alamat`='$almt',`tgl_periksa`='$tgl',`jenis_kelamin`='$jenkel', `no_rekme`='$rekme' WHERE id_pasien = '$id'";
     // Example: Replace this with your actual login logic
     if (mysqli_query($conn, $q)) {
         // Successful login, redirect to a dashboard or another page

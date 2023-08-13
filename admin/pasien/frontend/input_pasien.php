@@ -120,7 +120,7 @@ include('../../../conn.php');
               </a>
 
             </li>
-            <li  class="nav-item">
+            <li class="nav-item">
               <a href="javascript:out();" class="nav-link">
                 <i style="margin-left: 4px;margin-right: 10px;" class="fa-solid fa-right-from-bracket"></i>
                 <p>
@@ -159,6 +159,10 @@ include('../../../conn.php');
                     <h1>Input data pasien</h1>
                     <form method="post" action="../backend/insert_pasien.php">
                       <div class="mb-3">
+                        <label for="nama" class="form-label">No rekam medis</label>
+                        <input style="text-transform:uppercase" type="text" class="form-control" id="rekme" name="rekme" placeholder="Masukkan no rekam medis" required>
+                      </div>
+                      <div class="mb-3">
                         <label for="nama" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="nama_pasien" name="nama_pasien" placeholder="Masukkan nama" required>
                       </div>
@@ -181,7 +185,38 @@ include('../../../conn.php');
                           <option value="perempuan">Perempuan</option>
                         </select>
                       </div>
-                      <button style="margin-left: 95%;" type="submit" class="btn btn-primary">Kirim</button>
+                      <button style=" float: right;" type="submit" class="btn btn-primary">Kirim</button>
+                    </form>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+      </section>
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <!-- /.card -->
+                  <div class="container">
+                    <h1>Daftar pasien</h1>
+                    <form method="post" action="../backend/insert_rekme.php">
+                      <div class="mb-3">
+                        <label for="nama" class="form-label">No rekam medis</label>
+                        <input style="text-transform:uppercase" type="text" class="form-control" id="rekme" name="rekme" placeholder="Masukkan no rekam medis" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="usia" class="form-label">Tanggal periksa</label>
+                        <input type="date" class="form-control" id="tgl_periksa" name="tgl_periksa" required>
+                      </div>
+                      <button style=" float: right;" type="submit" class="btn btn-primary">Kirim</button>
                     </form>
                   </div>
                   <!-- /.card-body -->
@@ -215,6 +250,7 @@ include('../../../conn.php');
                       <table id="example1" class="table table-bordered table-striped">
                         <thead>
                           <tr>
+                            <th>No rekam medis</th>
                             <th>Nama pasien</th>
                             <th>No hp</th>
                             <th>Alamat</th>
@@ -228,6 +264,7 @@ include('../../../conn.php');
                         <tbody>
                           <?php while ($data = mysqli_fetch_array($tampil)) { ?>
                             <tr>
+                              <td><?php echo $data['no_rekme']; ?></td>
                               <td><?php echo $data['nama_pasien']; ?></td>
                               <td><?php echo $data['no_hp']; ?></td>
                               <td><?php echo $data['alamat']; ?></td>
@@ -246,6 +283,7 @@ include('../../../conn.php');
 
                         <tfoot>
                           <tr>
+                            <th>No rekam medis</th>
                             <th>Nama pasien</th>
                             <th>No hp</th>
                             <th>Alamat</th>

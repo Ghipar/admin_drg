@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pasnam = $_POST['nampas'];
     $idt = $_POST['idTran'];
     $dtn = date('Y-m-d');
+    $pay = $_POST["pay"];
     function get_day_name($date)
     {
         // Convert the date to a timestamp
@@ -30,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../frontend/input_transaksi.php");
         exit();
     } else {
-        $qb = "INSERT INTO tbl_transaksi (grand_total, jumlah_uang, kembali, metode_pembayaran, keterangan, id_akun, id_pasien, tgl_trans, hari) VALUES ('$total','$jmlh','$kem','tunai','$ket', '$idak', '$pasnam', '$dtn', '$tugel')";
+        $qb = "INSERT INTO tbl_transaksi (grand_total, jumlah_uang, kembali, metode_pembayaran, keterangan, id_akun, id_pasien, tgl_trans, hari) VALUES ('$total','$jmlh','$kem','$pay','$ket', '$idak', '$pasnam', '$dtn', '$tugel')";
         if (mysqli_query($conn, $qb)) {
             $q1 = "SELECT * FROM tbl_cart";
             $ren = mysqli_query($conn, $q1);
