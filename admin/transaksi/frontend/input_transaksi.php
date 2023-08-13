@@ -224,7 +224,7 @@ include('../../../conn.php');
                                             </div>
                                             <div class="mb-3">
                                                 <label for="pesan" class="form-label">Keterangan</label>
-                                                <textarea class="form-control" id="ket" name="ket" rows="4" placeholder="Masukkan keterangan" required></textarea>
+                                                <textarea style="text-transform: capitalize;" class="form-control" id="ket" name="ket" rows="4" placeholder="Masukkan keterangan" required></textarea>
                                             </div>
 
                                             <button  style=" float: right;  margin-bottom: 20px;" type="submit" class="btn btn-primary">Kirim</button>
@@ -361,6 +361,7 @@ include('../../../conn.php');
                                                 <thead>
                                                     <tr>
                                                         <th>Nama pasien</th>
+                                                        <th>No rekam medis</th>
                                                         <th>Nama admin</th>
                                                         <th>Jumlah uang</th>
                                                         <th>Jumlah kembali</th>
@@ -376,6 +377,7 @@ include('../../../conn.php');
 
                                                         <tr>
                                                             <td><?php echo $data['nama_pasien']; ?></td>
+                                                            <td><?php echo $data['no_rekme']; ?></td>
                                                             <td><?php echo $data['nama_akun']; ?></td>
                                                             <td><?php echo $data['jumlah_uang']; ?></td>
                                                             <td><?php echo $data['kembali']; ?></td>
@@ -407,6 +409,7 @@ include('../../../conn.php');
                                                 <tfoot>
                                                     <tr>
                                                         <th>Nama pasien</th>
+                                                        <th>No rekam medis</th>
                                                         <th>Nama admin</th>
                                                         <th>Jumlah uang</th>
                                                         <th>Jumlah kembali</th>

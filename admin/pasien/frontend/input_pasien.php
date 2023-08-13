@@ -160,11 +160,11 @@ include('../../../conn.php');
                     <form method="post" action="../backend/insert_pasien.php">
                       <div class="mb-3">
                         <label for="nama" class="form-label">No rekam medis</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control" id="rekme" name="rekme" placeholder="Masukkan no rekam medis" required>
+                        <input oninput="this.value = this.value.toUpperCase()" style="text-transform:uppercase" type="text" class="form-control" id="rekme" name="rekme" placeholder="Masukkan no rekam medis" required>
                       </div>
                       <div class="mb-3">
                         <label for="nama" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="nama_pasien" name="nama_pasien" placeholder="Masukkan nama" required>
+                        <input  style="text-transform: capitalize;" type="text" class="form-control" id="nama_pasien" name="nama_pasien" placeholder="Masukkan nama" required>
                       </div>
                       <div class="mb-3">
                         <label for="email" class="form-label">No hp (WA)</label>
@@ -172,7 +172,7 @@ include('../../../conn.php');
                       </div>
                       <div class="mb-3">
                         <label for="pesan" class="form-label">Alamat</label>
-                        <textarea class="form-control" id="almt" name="almt" rows="4" placeholder="Masukkan alamat" required></textarea>
+                        <textarea style="text-transform: capitalize;" class="form-control" id="almt" name="almt" rows="4" placeholder="Masukkan alamat" required></textarea>
                       </div>
                       <div class="mb-3">
                         <label for="usia" class="form-label">Tanggal periksa</label>
@@ -210,7 +210,7 @@ include('../../../conn.php');
                     <form method="post" action="../backend/insert_rekme.php">
                       <div class="mb-3">
                         <label for="nama" class="form-label">No rekam medis</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control" id="rekme" name="rekme" placeholder="Masukkan no rekam medis" required>
+                        <input oninput="this.value = this.value.toUpperCase()" style="text-transform:uppercase" type="text" class="form-control" id="rekme" name="rekme" placeholder="Masukkan no rekam medis" required>
                       </div>
                       <div class="mb-3">
                         <label for="usia" class="form-label">Tanggal periksa</label>

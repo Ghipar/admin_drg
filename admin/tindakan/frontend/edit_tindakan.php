@@ -160,7 +160,7 @@ include('../../../conn.php');
                                             <?php while ($data = mysqli_fetch_array($run)) { ?>
                                                 <div class="mb-3">
                                                     <label for="nama" class="form-label">Nama</label>
-                                                    <input type="text" class="form-control" id="nama_tindakan" name="nama_tindakan" placeholder="Masukkan nama tindakan" value="<?php echo $data['nama_tindakan'] ?>" required>
+                                                    <input style="text-transform: capitalize;" type="text" class="form-control" id="nama_tindakan" name="nama_tindakan" placeholder="Masukkan nama tindakan" value="<?php echo $data['nama_tindakan'] ?>" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label">Harga (Rp)</label>
@@ -168,7 +168,7 @@ include('../../../conn.php');
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="pesan" class="form-label">Keterangan</label>
-                                                    <textarea class="form-control" id="ket" name="ket" rows="4" placeholder="Masukkan keterangan" required> <?php echo $data['keterangan'] ?></textarea>
+                                                    <textarea style="text-transform: capitalize;" class="form-control" id="ket" name="ket" rows="4" placeholder="Masukkan keterangan" required> <?php echo $data['keterangan'] ?></textarea>
                                                 </div>
                                                 <button style=" float: right;" type="submit" class="btn btn-primary toastrDefaultSuccess">Kirim</button>
                                             <?php } ?>

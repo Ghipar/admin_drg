@@ -178,7 +178,7 @@ include('../../../conn.php');
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="nama" class="form-label">Nama</label>
-                                                    <input type="text" class="form-control" id="nama_pasien" name="nama_pasien" placeholder="Masukkan nama" value="<?php echo $data['nama_pasien'] ?>" required>
+                                                    <input style="text-transform: capitalize;" type="text" class="form-control" id="nama_pasien" name="nama_pasien" placeholder="Masukkan nama" value="<?php echo $data['nama_pasien'] ?>" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label">No hp (WA)</label>
@@ -186,7 +186,7 @@ include('../../../conn.php');
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="pesan" class="form-label">Alamat</label>
-                                                    <textarea class="form-control" id="almt" name="almt" rows="4" placeholder="Masukkan alamat" required> <?php echo $data['alamat'] ?></textarea>
+                                                    <textarea style="text-transform: capitalize;" class="form-control" id="almt" name="almt" rows="4" placeholder="Masukkan alamat" required> <?php echo $data['alamat'] ?></textarea>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="usia" class="form-label">Tanggal periksa</label>

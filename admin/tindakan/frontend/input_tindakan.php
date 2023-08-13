@@ -159,7 +159,7 @@ include('../../../conn.php');
                     <form method="post" action="../backend/insert_tindakan.php">
                       <div class="mb-3">
                         <label for="nama" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="nama_tindakan" name="nama_tindakan" placeholder="Masukkan nama" required>
+                        <input style="text-transform: capitalize;" type="text" class="form-control" id="nama_tindakan" name="nama_tindakan" placeholder="Masukkan nama" required>
                       </div>
                       <div class="mb-3">
                         <label for="email" class="form-label">Harga</label>
@@ -167,7 +167,7 @@ include('../../../conn.php');
                       </div>
                       <div class="mb-3">
                         <label for="pesan" class="form-label">Keterangan</label>
-                        <textarea class="form-control" id="ket" name="ket" rows="4" placeholder="Masukkan keterangan" required></textarea>
+                        <textarea style="text-transform: capitalize;" class="form-control" id="ket" name="ket" rows="4" placeholder="Masukkan keterangan" required></textarea>
                       </div>
                       <button style=" float: right;" type="submit" class="btn btn-primary">Kirim</button>
                     </form>
