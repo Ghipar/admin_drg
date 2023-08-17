@@ -1,6 +1,9 @@
 <?php
 session_start();
-
+if (!isset($_SESSION['status'])) {
+  $_SESSION['erl'] = 'ss';
+  header('location: index.php');
+}
 include('conn.php');
 $q = 'SELECT * FROM tbl_pasien';
 $run =  mysqli_query($conn, $q);
@@ -193,207 +196,232 @@ while ($data = mysqli_fetch_array($run)) {
                   <div class="icon"> <i class="ion ion-stats-bars"></i> </div></a>
                 </div>
               </div> <!-- ./col -->
-        
-            </div>
-            <!-- /.container-fluid -->
-        </section>
-      <section class="content">
-        <!-- Main content -->
-        <section class="content">
-          <div class="container-fluid"> <!-- Small boxes (Stat box) -->
-            <div class="row">
-              <div class="col-lg-4 col-6"> <!-- small box -->
-                <div class="small-box bg-danger">
-                  <div class="inner">
-                    <?php
-                    $quer = "SELECT SUM(grand_total) as total FROM tbl_transaksi WHERE tgl_trans = '$tglskrg'";
-                    $rn = mysqli_query($conn, $quer);
-                    $quer1 = "SELECT SUM(total_harga) as totalp FROM tbl_pengeluaran WHERE tgl_pengeluaran = '$tglskrg'";
-                    $rn1 = mysqli_query($conn, $quer1);
-                    ?>
-                    <?php while ($riw = mysqli_fetch_array($rn)) { ?>
-                      <?php while ($riw2 = mysqli_fetch_array($rn1)) { ?>
-                        <h3><?php echo "Rp " . number_format($riw['total'] - $riw2['totalp']<0? 0:$riw['total'] - $riw2['totalp'], 0, ',', '.') ?></h3>
-                      <?php } ?>
-                    <?php } ?>
-                    <p>Pemasukan harian</p>
-                  </div>
-                  <div class="icon"> <i class="ion ion-cash"></i> </div> <a href="admin/transaksi/frontend/input_transaksi.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-              </div> <!-- ./col -->
-              <div class="col-lg-4 col-6"> <!-- small box -->
-                <div class="small-box bg-warning">
-                  <div class="inner">
-                    <?php
-                    $quer = "SELECT SUM(total_harga) as total FROM tbl_pengeluaran WHERE tgl_pengeluaran = '$tglskrg'";
-                    $rn = mysqli_query($conn, $quer);
-                    ?>
-                    <?php while ($riw = mysqli_fetch_array($rn)) { ?>
-                      <h3 style="color: whitesmoke;"><?php echo "Rp " . number_format($riw['total'], 0, ',', '.') ?></h3>
-                    <?php } ?>
-                    <p style="color: whitesmoke;">Pengeluaran harian</p>
-                  </div>
-                  <div  class="icon"> <i class="ion ion-stats-bars"></i> </div> <a  href="admin/pengeluaran/frontend/input_pengeluaran.php" class="small-box-footer"> <span style="color: white;">More info</span> <i style="color: white;" class="fas fa-arrow-circle-right"></i></a>
-                </div>
-              </div> <!-- ./col -->
-              <div class="col-lg-4 col-6"> <!-- small box -->
-                <div class="small-box bg-success">
-                  <div class="inner">
-                    <?php
-                    $date = date("Y-m-d");
-                    $q = "SELECT * FROM tbl_pasien WHERE status = 'active'";
-                    $run = mysqli_query($conn, $q) or die(mysqli_error($conn));
-                    ?>
-                    <h3 style="color: white;"><?php echo mysqli_num_rows($run) ?></h3>
-                    <p style="color: white;">Jumlah pasien harian</p>
-                  </div>
-                  <div class="icon"> <i class="ion ion-person-add"></i> </div> <a href="admin/pasien/frontend/input_pasien.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-              </div> <!-- ./col --> <!-- ./col -->
-            </div>
-            <!-- /.container-fluid -->
-        </section>
-        <section class="content">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-lg-6 col-6">
-                <div class="card">
-                  <div class="card-header">
-                    <!-- /.card -->
-                    <div class="card">
-                      <div class="card-header">
-                        <h3 class="card-title"><b>Data total pemasukan</b></h3>
-                      </div>
-                      <!-- /.card-header -->
-                      <div class="col">
-                        <canvas id="myChart4"></canvas>
-                      </div>
-                      <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
-              </div>
-              <div class="col-lg-6 col-6">
-                <div class="card">
-                  <div class="card-header">
-                    <!-- /.card -->
-                    <div class="card">
-                      <div class="card-header">
-                        <h3 class="card-title"><b>Data total pengeluaran</b></h3>
-                      </div>
-                      <!-- /.card-header -->
-                      <div class="col">
-                        <canvas id="myChart5"></canvas>
-                      </div>
-                      <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- /.container-fluid -->
-        </section>
 
+            </div>
+            <!-- /.container-fluid -->
+        </section>
         <section class="content">
           <!-- Main content -->
           <section class="content">
             <div class="container-fluid"> <!-- Small boxes (Stat box) -->
               <div class="row">
-                <div class="col-lg-4 col-6"> <!-- small box -->
-                  <div class="card">
-                    <div class="card-header">
-                      <!-- /.card -->
-                      <div class="card">
-                        <div class="card-header">
-                          <h3 class="card-title"><b>Data tindakan</b></h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-
-                          <div class="col">
-                            <canvas id="myChart" style="height:80px; width:80px; margin:0px auto;"></canvas>
-                          </div>
-
-                        </div>
-                        <!-- /.card-body -->
-                      </div>
-
-                      <!-- /.card -->
+                <div class="col-lg-12 col-7"> <!-- small box -->
+                  <div class="small-box bg-dark">
+                    <div class="inner">
+                      <?php
+                      $quer1 = "SELECT SUM(biaya_admin) as totaladm FROM tbl_transaksi";
+                      $rn1 = mysqli_query($conn, $quer1);
+                      ?>
+                      <?php while ($riw = mysqli_fetch_array($rn1)) { ?>
+                        <h3><?php echo "Rp " . number_format($riw['totaladm'], 0, ',', '.') ?></h3>
+                      <?php } ?>
+                      <p>Total pemasukan admin</p>
                     </div>
-
-                    <!-- /.col -->
-                  </div>
-                </div> <!-- ./col -->
-                <div class="col-lg-4 col-6"> <!-- small box -->
-                  <div class="card">
-                    <div class="card-header">
-                      <!-- /.card -->
-                      <div class="card">
-                        <div class="card-header">
-                          <h3 class="card-title"><b>Data pasien (Hari)</b></h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-
-                          <div class="col">
-                            <canvas id="myChart3" style="height:80px; width:80px; margin:0px auto;"></canvas>
-                          </div>
-
-                        </div>
-                        <!-- /.card-body -->
-                      </div>
-
-                      <!-- /.card -->
-                    </div>
-
-                    <!-- /.col -->
-                  </div>
-                </div> <!-- ./col -->
-                <div class="col-lg-4 col-6"> <!-- small box -->
-                  <div class="card">
-                    <div class="card-header">
-                      <!-- /.card -->
-                      <div class="card">
-                        <div class="card-header">
-                          <h3 class="card-title"><b>Data pasien (Gender)</b></h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-
-                          <div class="col">
-                            <canvas id="myChart2" style="height:80px; width:80px; margin:0px auto;"></canvas>
-                          </div>
-
-                        </div>
-                        <!-- /.card-body -->
-                      </div>
-
-                      <!-- /.card -->
-                    </div>
-
-                    <!-- /.col -->
+                    <div class="icon"> <i class="ion ion-cash"></i> </div> <a href="admin/transaksi/frontend/input_transaksi.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                   </div>
                 </div> <!-- ./col -->
 
-                <!-- /.container-fluid -->
+
+              </div>
+              <!-- /.container-fluid -->
           </section>
-          <!-- /.content -->
           <section class="content">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-sm-5">
-
-                  <!-- /.row -->
+            <!-- Main content -->
+            <section class="content">
+              <div class="container-fluid"> <!-- Small boxes (Stat box) -->
+                <div class="row">
+                  <div class="col-lg-4 col-6"> <!-- small box -->
+                    <div class="small-box bg-danger">
+                      <div class="inner">
+                        <?php
+                        $quer = "SELECT SUM(grand_total) as total FROM tbl_transaksi WHERE tgl_trans = '$tglskrg'";
+                        $rn = mysqli_query($conn, $quer);
+                        $quer1 = "SELECT SUM(total_harga) as totalp FROM tbl_pengeluaran WHERE tgl_pengeluaran = '$tglskrg'";
+                        $rn1 = mysqli_query($conn, $quer1);
+                        ?>
+                        <?php while ($riw = mysqli_fetch_array($rn)) { ?>
+                          <?php while ($riw2 = mysqli_fetch_array($rn1)) { ?>
+                            <h3><?php echo "Rp " . number_format($riw['total'] - $riw2['totalp'] < 0 ? 0 : $riw['total'] - $riw2['totalp'], 0, ',', '.') ?></h3>
+                          <?php } ?>
+                        <?php } ?>
+                        <p>Pemasukan harian</p>
+                      </div>
+                      <div class="icon"> <i class="ion ion-cash"></i> </div> <a href="admin/transaksi/frontend/input_transaksi.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div> <!-- ./col -->
+                  <div class="col-lg-4 col-6"> <!-- small box -->
+                    <div class="small-box bg-warning">
+                      <div class="inner">
+                        <?php
+                        $quer = "SELECT SUM(total_harga) as total FROM tbl_pengeluaran WHERE tgl_pengeluaran = '$tglskrg'";
+                        $rn = mysqli_query($conn, $quer);
+                        ?>
+                        <?php while ($riw = mysqli_fetch_array($rn)) { ?>
+                          <h3 style="color: whitesmoke;"><?php echo "Rp " . number_format($riw['total'], 0, ',', '.') ?></h3>
+                        <?php } ?>
+                        <p style="color: whitesmoke;">Pengeluaran harian</p>
+                      </div>
+                      <div class="icon"> <i class="ion ion-stats-bars"></i> </div> <a href="admin/pengeluaran/frontend/input_pengeluaran.php" class="small-box-footer"> <span style="color: white;">More info</span> <i style="color: white;" class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div> <!-- ./col -->
+                  <div class="col-lg-4 col-6"> <!-- small box -->
+                    <div class="small-box bg-success">
+                      <div class="inner">
+                        <?php
+                        $date = date("Y-m-d");
+                        $q = "SELECT * FROM tbl_pasien WHERE status = 'active'";
+                        $run = mysqli_query($conn, $q) or die(mysqli_error($conn));
+                        ?>
+                        <h3 style="color: white;"><?php echo mysqli_num_rows($run) ?></h3>
+                        <p style="color: white;">Jumlah pasien harian</p>
+                      </div>
+                      <div class="icon"> <i class="ion ion-person-add"></i> </div> <a href="admin/pasien/frontend/input_pasien.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div> <!-- ./col --> <!-- ./col -->
                 </div>
                 <!-- /.container-fluid -->
-          </section>
+            </section>
+            <section class="content">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-lg-6 col-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <!-- /.card -->
+                        <div class="card">
+                          <div class="card-header">
+                            <h3 class="card-title"><b>Data total pemasukan</b></h3>
+                          </div>
+                          <!-- /.card-header -->
+                          <div class="col">
+                            <canvas id="myChart4"></canvas>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                  <div class="col-lg-6 col-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <!-- /.card -->
+                        <div class="card">
+                          <div class="card-header">
+                            <h3 class="card-title"><b>Data total pengeluaran</b></h3>
+                          </div>
+                          <!-- /.card-header -->
+                          <div class="col">
+                            <canvas id="myChart5"></canvas>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                  <!-- /.container-fluid -->
+            </section>
 
-          <!-- /.content -->
+            <section class="content">
+              <!-- Main content -->
+              <section class="content">
+                <div class="container-fluid"> <!-- Small boxes (Stat box) -->
+                  <div class="row">
+                    <div class="col-lg-4 col-6"> <!-- small box -->
+                      <div class="card">
+                        <div class="card-header">
+                          <!-- /.card -->
+                          <div class="card">
+                            <div class="card-header">
+                              <h3 class="card-title"><b>Data tindakan</b></h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+
+                              <div class="col">
+                                <canvas id="myChart" style="height:80px; width:80px; margin:0px auto;"></canvas>
+                              </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                          </div>
+
+                          <!-- /.card -->
+                        </div>
+
+                        <!-- /.col -->
+                      </div>
+                    </div> <!-- ./col -->
+                    <div class="col-lg-4 col-6"> <!-- small box -->
+                      <div class="card">
+                        <div class="card-header">
+                          <!-- /.card -->
+                          <div class="card">
+                            <div class="card-header">
+                              <h3 class="card-title"><b>Data pasien (Hari)</b></h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+
+                              <div class="col">
+                                <canvas id="myChart3" style="height:80px; width:80px; margin:0px auto;"></canvas>
+                              </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                          </div>
+
+                          <!-- /.card -->
+                        </div>
+
+                        <!-- /.col -->
+                      </div>
+                    </div> <!-- ./col -->
+                    <div class="col-lg-4 col-6"> <!-- small box -->
+                      <div class="card">
+                        <div class="card-header">
+                          <!-- /.card -->
+                          <div class="card">
+                            <div class="card-header">
+                              <h3 class="card-title"><b>Data pasien (Gender)</b></h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+
+                              <div class="col">
+                                <canvas id="myChart2" style="height:80px; width:80px; margin:0px auto;"></canvas>
+                              </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                          </div>
+
+                          <!-- /.card -->
+                        </div>
+
+                        <!-- /.col -->
+                      </div>
+                    </div> <!-- ./col -->
+
+                    <!-- /.container-fluid -->
+              </section>
+              <!-- /.content -->
+              <section class="content">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-sm-5">
+
+                      <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid -->
+              </section>
+
+              <!-- /.content -->
     </div>
 
     <!-- /.content-wrapper -->
@@ -483,8 +511,8 @@ while ($data = mysqli_fetch_array($run)) {
         confirmButtonText: 'Yaa',
       }).then((result) => {
         if (result.isConfirmed) {
-         
-          window.location = "index.php";
+
+          window.location = "logout.php";
         }
       })
     };

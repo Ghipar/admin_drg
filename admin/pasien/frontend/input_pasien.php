@@ -158,34 +158,57 @@ include('../../../conn.php');
                   <div class="container">
                     <h1>Input data pasien</h1>
                     <form method="post" action="../backend/insert_pasien.php">
-                      <div class="mb-3">
-                        <label for="nama" class="form-label">No rekam medis</label>
-                        <input oninput="this.value = this.value.toUpperCase()" style="text-transform:uppercase" type="text" class="form-control" id="rekme" name="rekme" placeholder="Masukkan no rekam medis" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="nama" class="form-label">Nama</label>
-                        <input  style="text-transform: capitalize;" type="text" class="form-control" id="nama_pasien" name="nama_pasien" placeholder="Masukkan nama" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="email" class="form-label">No hp (WA)</label>
-                        <input type="number" class="form-control" id="hp" name="hp" placeholder="Masukkan no handphone (WA)" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="pesan" class="form-label">Alamat</label>
-                        <textarea style="text-transform: capitalize;" class="form-control" id="almt" name="almt" rows="4" placeholder="Masukkan alamat" required></textarea>
-                      </div>
-                      <div class="mb-3">
-                        <label for="usia" class="form-label">Tanggal periksa</label>
-                        <input type="date" class="form-control" id="tgl_periksa" name="tgl_periksa" required>
-                      </div>
-                      <div>
-                        <label for="jenisKelamin" class="form-label">Jenis Kelamin</label>
-                        <select style="margin-left: 10px;" class="form-select" id="jenisKelamin" name="jenisKelamin" required>
-                          <option value="laki-laki">Laki-laki</option>
-                          <option value="perempuan">Perempuan</option>
-                        </select>
-                      </div>
-                      <button style=" float: right;" type="submit" class="btn btn-primary">Kirim</button>
+                      <?php
+                      $q = mysqli_query($conn, "SELECT no_rekme
+                       FROM tbl_pasien
+                       WHERE no_rekme LIKE 'L%'
+                       ORDER BY no_rekme DESC LIMIT 1
+                       ");
+                      $q2 = mysqli_query($conn, "SELECT no_rekme
+                       FROM tbl_pasien
+                       WHERE no_rekme LIKE 'P%'
+                       ORDER BY no_rekme DESC LIMIT 1
+                       ");
+                      while ($d = mysqli_fetch_array($q)) {
+                        while ($d2 = mysqli_fetch_array($q2)) {
+                      ?>
+                          <div class="mb-3">
+                            <label for="nama" class="form-label">No rekam medis</label><br>
+                            <div style="display: inline-flex;">
+                              <label style="margin-top: 7px; margin-right: 10px;" for="nama" class="form-label">Cowok : </label>
+                              <input value="<?php echo $d['no_rekme'] ?>" style="text-transform:uppercase; width: 100px;margin-right: 20px;" type="text" class="form-control" readonly>
+                              <label style="margin-top: 7px; margin-right: 10px;" for="nama" class="form-label">Cewek : </label>
+                              <input value="<?php echo $d2['no_rekme'] ?>" style="text-transform:uppercase; width: 100px;" type="text" class="form-control" readonly><br>
+                            </div>
+                          <?php } ?>
+                        <?php } ?>
+
+                        <input oninput="this.value = this.value.toUpperCase()" style="text-transform:uppercase;margin-top: 20px;" type="text" class="form-control" id="rekme" name="rekme" placeholder="Masukkan no rekam medis" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="nama" class="form-label">Nama</label>
+                            <input style="text-transform: capitalize;" type="text" class="form-control" id="nama_pasien" name="nama_pasien" placeholder="Masukkan nama" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="email" class="form-label">No hp (WA)</label>
+                            <input type="number" class="form-control" id="hp" name="hp" placeholder="Masukkan no handphone (WA)" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="pesan" class="form-label">Alamat</label>
+                            <textarea style="text-transform: capitalize;" class="form-control" id="almt" name="almt" rows="4" placeholder="Masukkan alamat" required></textarea>
+                          </div>
+                          <div class="mb-3">
+                            <label for="usia" class="form-label">Tanggal periksa</label>
+                            <input type="date" class="form-control" id="tgl_periksa" name="tgl_periksa" required>
+                          </div>
+                          <div>
+                            <label for="jenisKelamin" class="form-label">Jenis Kelamin</label>
+                            <select style="margin-left: 10px;" class="form-select" id="jenisKelamin" name="jenisKelamin" required>
+                              <option value="laki-laki">Laki-laki</option>
+                              <option value="perempuan">Perempuan</option>
+                            </select>
+                          </div>
+                          <button style=" float: right;" type="submit" class="btn btn-primary">Kirim</button>
                     </form>
                   </div>
                   <!-- /.card-body -->
@@ -414,7 +437,7 @@ include('../../../conn.php');
         confirmButtonText: 'Yaa',
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location = "../../../index.php";
+          window.location = "../../../logout.php";
         }
       })
     }

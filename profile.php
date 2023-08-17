@@ -265,7 +265,7 @@ while ($data = mysqli_fetch_array($run)) {
                 confirmButtonText: 'Yaa',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location = "index.php";
+                    window.location = "logout.php";
                 }
             })
         }

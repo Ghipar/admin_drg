@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+if (isset($_SESSION['status'])) {
+    header('location: dashboard.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +59,8 @@ session_start();
         </div>
     </div>
 
-    <?php if (isset($_SESSION['notiflogin'])) {
+    <?php 
+    if (isset($_SESSION['notiflogin'])) {
         echo "
         <script>
         Swal.fire({
@@ -69,7 +72,34 @@ session_start();
         })
         </script>";
         unset($_SESSION['notiflogin']);
-    } ?>
+    } 
+    if (isset($_SESSION['notiflogout'])) {
+        echo "
+        <script>
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Logout berhasil',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        </script>";
+        unset($_SESSION['notiflogout']);
+    } 
+    if (isset($_SESSION['erl'])) {
+        echo "
+        <script>
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Silahkan login dulu!!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        </script>";
+        unset($_SESSION['erl']);
+    } 
+    ?>
     <script>
         function myFunction() {
             var x = document.getElementById("password");

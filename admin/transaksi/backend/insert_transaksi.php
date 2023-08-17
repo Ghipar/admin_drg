@@ -10,8 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $total = $dta["total_harga"];
     }
 
-    $jmlh = $_POST["uang"];
-    $kem = $jmlh - $total;
+    $jmlh = $_POST["uang"] ;
+    $kem = $jmlh - ($total + 10000);
     $ket = $_POST["ket"];
     $idak = $_SESSION['idAkun'];
     $pasnam = $_POST['nampas'];
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../frontend/input_transaksi.php");
         exit();
     } else {
-        $qb = "INSERT INTO tbl_transaksi (grand_total, jumlah_uang, kembali, metode_pembayaran, keterangan, id_akun, id_pasien, tgl_trans, hari) VALUES ('$total','$jmlh','$kem','$pay','$ket', '$idak', '$pasnam', '$dtn', '$tugel')";
+        $qb = "INSERT INTO tbl_transaksi (grand_total, jumlah_uang, kembali, metode_pembayaran, keterangan, id_akun, id_pasien, tgl_trans, hari, biaya_admin) VALUES ('$total','$jmlh','$kem','$pay','$ket', '$idak', '$pasnam', '$dtn', '$tugel', 10000)";
         if (mysqli_query($conn, $qb)) {
             $q1 = "SELECT * FROM tbl_cart";
             $ren = mysqli_query($conn, $q1);

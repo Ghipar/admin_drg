@@ -179,6 +179,7 @@ include('../../../conn.php');
                           <thead>
                             <tr>
                               <th>Nama pasien</th>
+                              <th>No rekam medis</th>
                               <th>No hp</th>
                               <th>Alamat</th>
                               <th>Tanggal periksa</th>
@@ -192,6 +193,7 @@ include('../../../conn.php');
                             <?php while ($data = mysqli_fetch_array($tampil)) { ?>
                               <tr>
                                 <td><?php echo $data['nama_pasien']; ?></td>
+                                <td><?php echo $data['no_rekme']; ?></td>
                                 <td><?php echo $data['no_hp']; ?></td>
                                 <td><?php echo $data['alamat']; ?></td>
                                 <td><?php echo $data['tgl_periksa']; ?></td>
@@ -208,6 +210,7 @@ include('../../../conn.php');
                           <tfoot>
                             <tr>
                               <th>Nama pasien</th>
+                              <th>No rekam medis</th>
                               <th>No hp</th>
                               <th>Alamat</th>
                               <th>Tanggal periksa</th>
@@ -316,7 +319,7 @@ include('../../../conn.php');
         confirmButtonText: 'Yaa',
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location = "../../../index.php";
+          window.location = "../../../logout.php";
         }
       })
     }

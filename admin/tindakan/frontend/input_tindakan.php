@@ -353,7 +353,7 @@ include('../../../conn.php');
         confirmButtonText: 'Yaa',
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location = "../../../index.php";
+          window.location = "../../../logout.php";
         }
       })
     }
