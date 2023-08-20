@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $jmlh = $_POST["uang"] ;
     $kem = $jmlh - ($total + 10000);
-    $ket = $_POST["ket"];
+    $ket = ucfirst($_POST["ket"]);
     $idak = $_SESSION['idAkun'];
     $pasnam = $_POST['nampas'];
     $idt = $_POST['idTran'];

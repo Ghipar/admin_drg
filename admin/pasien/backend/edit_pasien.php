@@ -3,10 +3,10 @@ session_start();
 include('../../../conn.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nampas = $_POST["nama_pasien"];
+    $nampas = ucfirst($_POST["nama_pasien"]) ;
     $rekme = $_POST["rekme"];
     $hp = $_POST["hp"];
-    $almt = $_POST["almt"];
+    $almt = ucfirst( $_POST["almt"]);
     $tgl = $_POST["tgl_periksa"];
     $jenkel = $_POST["jenisKelamin"];
     $id = $_GET["id"];

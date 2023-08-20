@@ -3,9 +3,9 @@ session_start();
 include('../../../conn.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nampeng = $_POST["nama_pengeluaran"];
+    $nampeng = ucfirst($_POST["nama_pengeluaran"]);
     $harga = $_POST["har"];
-    $ket = $_POST["ket"];
+    $ket = ucfirst($_POST["ket"]);
     $tgll = date('Y-m-d');
 
     while ($get = mysqli_fetch_array(mysqli_query($conn, "SELECT SUM(grand_total) AS siu FROM tbl_transaksi"))) {

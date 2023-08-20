@@ -3,9 +3,9 @@ session_start();
 include('../../../conn.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $namtin = $_POST["nama_tindakan"];
+    $namtin = ucfirst($_POST["nama_tindakan"]);
     $harga= $_POST["harga"];
-    $ket = $_POST["ket"];
+    $ket = ucfirst($_POST["ket"]);
     
 
     // You should validate and sanitize the input here
