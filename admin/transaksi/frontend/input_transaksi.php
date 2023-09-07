@@ -146,10 +146,7 @@ include('../../../conn.php');
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
-
             <!-- Main content -->
-
-
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -169,21 +166,24 @@ include('../../../conn.php');
                                             $run2 = mysqli_query($conn, $q2);
                                             ?>
 
-                                            <div class="mb-5">
-
-                                                <label style="margin-top: 10px;" for="nama" class="form-label">Nama tindakan</label>
-                                                <div>
-                                                    <select style="min-height: 30px; width: 200px; padding-left: 8px;" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' class="form-select" id="idtin" name="idtin" required>
-                                                        <?php
-                                                        while ($data = mysqli_fetch_array($run)) {
-                                                        ?>
-                                                            <option value="<?php echo $data['id_tindakan'] ?>"><?php echo $data['nama_tindakan'] ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                    <h6 style="color: red; margin-top: 5px;"><?php echo mysqli_num_rows($run2) == 2 ? 'Maksimal 2 tindakan!!' : '' ?></h6>
+                                            <div class="card mb-3" style="width: fit-content;background-color: #f2fcf8;">
+                                                <div class="card-body">
+                                                    <label style="margin-top: 10px;" for="nama" class="form-label">Nama tindakan</label>
+                                                    <div>
+                                                        <select style="min-height: 30px; width: 200px; padding-left: 8px;" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' class="form-select" id="idtin" name="idtin" required>
+                                                            <?php
+                                                            while ($data = mysqli_fetch_array($run)) {
+                                                            ?>
+                                                                <option value="<?php echo $data['id_tindakan'] ?>"><?php echo $data['nama_tindakan'] ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                        <h6 style="color: red; margin-top: 5px;"><?php echo mysqli_num_rows($run2) == 2 ? 'Maksimal 2 tindakan!!' : '' ?></h6>
+                                                    </div>
+                                                    <button <?php echo mysqli_num_rows($run2) == 2 ? 'disabled' : '' ?> style=" width: 50px; margin-left: 150px;margin-bottom: 10px;  font-size: 14px;" type="submit" class="btn btn-success">Add</button>
                                                 </div>
-                                                <button <?php echo mysqli_num_rows($run2) == 2 ? 'disabled' : '' ?> style=" width: 50px; margin-left: 150px;margin-bottom: 10px;  font-size: 14px;" type="submit" class="btn btn-success">Add</button>
+
                                             </div>
+
 
                                         </form>
 
@@ -193,14 +193,71 @@ include('../../../conn.php');
                                             $ex = mysqli_query($conn, $tran);
                                             ?>
 
-                                            <div>
-                                                <label for="nama" class="form-label">ID Transaksi</label>
-                                                <?php
-                                                while ($data = mysqli_fetch_array($ex)) {
-                                                ?>
-                                                    <input style="margin-left: 10px;width: 50px; font-weight: bold; color: red;" readonly="true" type="number" class="form-control-sm" id="idTran" name="idTran" value="<?php echo ($data['Auto_increment'])  ?>" required>
-                                                <?php } ?>
+
+                                            <div class="card">
+                                                <div class="card-body" style="background-color: #f2fcf8;">
+                                                    <div>
+                                                        <label for="nama" class="form-label">ID Transaksi</label>
+                                                        <?php
+                                                        while ($data = mysqli_fetch_array($ex)) {
+                                                        ?>
+                                                            <input style="margin-left: 10px;width: 50px; font-weight: bold; color: red;" readonly="true" type="number" class="form-control-sm" id="idTran" name="idTran" value="<?php echo ($data['Auto_increment'])  ?>" required>
+                                                        <?php } ?>
+                                                    </div>
+                                                    <table style="margin-top: 20px;margin-bottom: 20px;" id="cart" class="table table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nama tindakan</th>
+                                                                <th>Harga</th>
+                                                                <th>Alat</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <?php
+                                                        $e = "SELECT tbl_cart.id_cart, tbl_tindakan.nama_tindakan, tbl_tindakan.harga
+                                                            FROM tbl_cart
+                                                            INNER JOIN tbl_tindakan ON tbl_cart.id_tindakan=tbl_tindakan.id_tindakan;";
+                                                        $ren = mysqli_query($conn, $e);
+                                                        $e1 = "SELECT SUM(harga) AS total_harga FROM tbl_cart";
+                                                        $ren1 = mysqli_query($conn, $e1);
+                                                        ?>
+                                                        <tbody>
+                                                            <?php while ($data = mysqli_fetch_array($ren)) { ?>
+                                                                <tr>
+                                                                    <td><?php echo $data['nama_tindakan']; ?></td>
+                                                                    <td><?php echo $data['harga']; ?></td>
+                                                                    <td>
+                                                                        <a href="../../transaksi/backend/hapus_cart.php?id=<?php echo $data['id_cart']; ?>"><i class="fa-solid fa-trash" style="color: red; margin-left: 5px;"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </tbody>
+
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Nama tindakan</th>
+                                                                <th>Harga</th>
+                                                                <th>Alat</th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                    <?php while ($data = mysqli_fetch_array($ren1)) { ?>
+                                                        <h3 style=" font-weight: bold; margin-bottom: 20px;">Total harga <span style="color: red;margin-left: 14px;" id="tothar">: <?php echo "Rp " . number_format($data['total_harga'], 0, ',', '.') ?></span> </h3>
+                                                        <h3 style=" font-weight: bold; margin-bottom: 20px;">Biaya admin <span style="color: red;" id="tothar">: <?php echo "Rp " . number_format($data['total_harga'] == 0 ? 0 : 10000, 0, ',', '.') ?></span> </h3>
+                                                        <h3 style=" font-weight: bold; margin-bottom: 20px;">Grand total <span style="color: red;margin-left: 13px;" id="tothar">: <?php echo "Rp " . number_format($data['total_harga'] == 0 ? 0 : $data['total_harga'] +  10000, 0, ',', '.') ?></span> </h3>
+
+                                                        <?php $nom = '<span id="result" >213123</span>'; ?>
+                                                        <h3 style=" font-weight: bold;">Kembali <span style="color: red; margin-left: 50px;">:</span> <span style="color: red; margin-left: 1px;" id="result" name="result"> </span> </h3> <br>
+
+                                                    <?php
+                                                    }
+                                                    ?><!-- /.card-body -->
+                                                </div>
+
                                             </div>
+
+
                                             <label style="margin-top: 10px;" for="nama" class="form-label">Nama pasien</label>
                                             <div class="mb-3">
                                                 <select style="min-height: 30px; width: 200px; padding-left: 8px;" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' class="form-select" id="nampas" name="nampas" required>
@@ -212,6 +269,7 @@ include('../../../conn.php');
                                                 </select>
                                             </div>
                                             <div class="mb-3">
+
                                                 <label for="nama" class="form-label">Jumlah uang</label>
                                                 <input onkeypress="return onlyNumberKey(event)" type="text" class="form-control" id="uang" name="uang" placeholder="Masukkan jumlah uang" oninput="getVal()" required>
                                             </div>
@@ -241,84 +299,7 @@ include('../../../conn.php');
                     </div>
                     <!-- /.container-fluid -->
             </section>
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <!-- /.card -->
-                                    <div class="container">
-                                        <h1>Cart</h1>
-                                        <div class="card-body">
 
-                                            <table id="cart" class="table table-bordered table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Nama tindakan</th>
-                                                        <th>Harga</th>
-                                                        <th>Alat</th>
-                                                    </tr>
-                                                </thead>
-                                                <?php
-                                                $e = "SELECT tbl_cart.id_cart, tbl_tindakan.nama_tindakan, tbl_tindakan.harga
-                                                            FROM tbl_cart
-                                                            INNER JOIN tbl_tindakan ON tbl_cart.id_tindakan=tbl_tindakan.id_tindakan;";
-                                                $ren = mysqli_query($conn, $e);
-                                                $e1 = "SELECT SUM(harga) AS total_harga FROM tbl_cart";
-                                                $ren1 = mysqli_query($conn, $e1);
-                                                ?>
-                                                <tbody>
-                                                    <?php while ($data = mysqli_fetch_array($ren)) { ?>
-                                                        <tr>
-                                                            <td><?php echo $data['nama_tindakan']; ?></td>
-                                                            <td><?php echo $data['harga']; ?></td>
-                                                            <td>
-                                                                <a href="../../transaksi/backend/hapus_cart.php?id=<?php echo $data['id_cart']; ?>"><i class="fa-solid fa-trash" style="color: red; margin-left: 5px;"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>Nama tindakan</th>
-                                                        <th>Harga</th>
-                                                        <th>Alat</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-
-                                        </div>
-
-                                        <br><br>
-                                        <?php while ($data = mysqli_fetch_array($ren1)) { ?>
-                                            <h3 style=" font-weight: bold; margin-bottom: 20px;">Total harga <span style="color: red;margin-left: 14px;" id="tothar">: <?php echo "Rp " . number_format($data['total_harga'], 0, ',', '.') ?></span> </h3>
-                                            <h3 style=" font-weight: bold; margin-bottom: 20px;">Biaya admin <span style="color: red;" id="tothar">: <?php echo "Rp " . number_format($data['total_harga'] == 0 ? 0:10000, 0, ',', '.') ?></span> </h3>
-                                            <h3 style=" font-weight: bold; margin-bottom: 20px;">Grand total <span style="color: red;margin-left: 13px;" id="tothar">: <?php echo "Rp " . number_format($data['total_harga'] == 0? 0:$data['total_harga'] +  10000, 0, ',', '.') ?></span> </h3>
-
-                                            <?php $nom = '<span id="result" >213123</span>'; ?>
-                                            <h3 style=" font-weight: bold;">Kembali <span style="color: red; margin-left: 50px;">:</span> <span style="color: red; margin-left: 1px;" id="result" name="result"> </span> </h3> <br>
-
-                                        <?php
-                                        }
-                                        ?><!-- /.card-body -->
-
-
-
-                                    </div>
-                                    <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
-                    </div>
-                    <!-- /.container-fluid -->
-            </section>
 
 
             <section class="content">
@@ -355,15 +336,15 @@ include('../../../conn.php');
                                             <?php
                                             $quer = "SELECT SUM(biaya_admin) as totaladm FROM tbl_transaksi";
                                             $rn = mysqli_query($conn, $quer);
-                                            
+
                                             ?>
-                                            
-                                                <?php while ($riw = mysqli_fetch_array($rn)) { ?>
-                                                    <h3 class="card-title" style="color: red; margin-left: 66px;"><b>
-                                                            <?php echo ": Rp " . number_format($riw['totaladm'], 0, ',', '.') ?>
-                                                        </b></h3>
-                                                <?php } ?>
-                                            
+
+                                            <?php while ($riw = mysqli_fetch_array($rn)) { ?>
+                                                <h3 class="card-title" style="color: red; margin-left: 66px;"><b>
+                                                        <?php echo ": Rp " . number_format($riw['totaladm'], 0, ',', '.') ?>
+                                                    </b></h3>
+                                            <?php } ?>
+
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
@@ -608,14 +589,15 @@ include('../../../conn.php');
             }
 
         }
+
         function onlyNumberKey(evt) {
-             
-             // Only ASCII character in that range allowed
-             var ASCIICode = (evt.which) ? evt.which : evt.keyCode
-             if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
-                 return false;
-             return true;
-         }
+
+            // Only ASCII character in that range allowed
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
     </script>
 
     <?php if (isset($_SESSION['notifed'])) {
