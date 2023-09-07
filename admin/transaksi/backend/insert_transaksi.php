@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $total = $dta["total_harga"];
     }
 
-    $jmlh = $_POST["uang"] ;
+    $jmlh = $_POST["uang"];
     $kem = $jmlh - ($total + 10000);
     $ket = ucfirst($_POST["ket"]);
     $idak = $_SESSION['idAkun'];
@@ -31,24 +31,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../frontend/input_transaksi.php");
         exit();
     } else {
-        $qb = "INSERT INTO tbl_transaksi (grand_total, jumlah_uang, kembali, metode_pembayaran, keterangan, id_akun, id_pasien, tgl_trans, hari, biaya_admin) VALUES ('$total','$jmlh','$kem','$pay','$ket', '$idak', '$pasnam', '$dtn', '$tugel', 10000)";
-        if (mysqli_query($conn, $qb)) {
-            $q1 = "SELECT * FROM tbl_cart";
-            $ren = mysqli_query($conn, $q1);
-            while ($dta1 = mysqli_fetch_array($ren)) {
-                $tin = $dta1["id_tindakan"];
-                $q2 = "INSERT INTO tbl_detail_transaksi (id_transaksi, id_tindakan) VALUES ('$idt','$tin')";
-                mysqli_query($conn, $q2);
+        if ($ket == '') {
+            $qb = "INSERT INTO tbl_transaksi (grand_total, jumlah_uang, kembali, metode_pembayaran, keterangan, id_akun, id_pasien, tgl_trans, hari, biaya_admin) VALUES ('$total','$jmlh','$kem','$pay','Tanpa Keterangan', '$idak', '$pasnam', '$dtn', '$tugel', 10000)";
+            if (mysqli_query($conn, $qb)) {
+                $q1 = "SELECT * FROM tbl_cart";
+                $ren = mysqli_query($conn, $q1);
+                while ($dta1 = mysqli_fetch_array($ren)) {
+                    $tin = $dta1["id_tindakan"];
+                    $q2 = "INSERT INTO tbl_detail_transaksi (id_transaksi, id_tindakan) VALUES ('$idt','$tin')";
+                    mysqli_query($conn, $q2);
+                }
+                mysqli_query($conn, "DELETE FROM tbl_cart");
+                mysqli_query($conn, "UPDATE `tbl_pasien` SET `status`='finish' WHERE id_pasien = '$pasnam'");
+                $_SESSION['notifip'] = 'success';
+                header("Location: ../frontend/input_transaksi.php");
+                exit();
+            } else {
+                // Invalid credentials, show an error message
+                header("Location: ../frontend/input_transaksi.php");
+                exit();
             }
-            mysqli_query($conn, "DELETE FROM tbl_cart");
-            mysqli_query($conn, "UPDATE `tbl_pasien` SET `status`='finish' WHERE id_pasien = '$pasnam'");
-            $_SESSION['notifip'] = 'success';
-            header("Location: ../frontend/input_transaksi.php");
-            exit();
         } else {
-            // Invalid credentials, show an error message
-            header("Location: ../frontend/input_transaksi.php");
-            exit();
+            $qb = "INSERT INTO tbl_transaksi (grand_total, jumlah_uang, kembali, metode_pembayaran, keterangan, id_akun, id_pasien, tgl_trans, hari, biaya_admin) VALUES ('$total','$jmlh','$kem','$pay','$ket', '$idak', '$pasnam', '$dtn', '$tugel', 10000)";
+            if (mysqli_query($conn, $qb)) {
+                $q1 = "SELECT * FROM tbl_cart";
+                $ren = mysqli_query($conn, $q1);
+                while ($dta1 = mysqli_fetch_array($ren)) {
+                    $tin = $dta1["id_tindakan"];
+                    $q2 = "INSERT INTO tbl_detail_transaksi (id_transaksi, id_tindakan) VALUES ('$idt','$tin')";
+                    mysqli_query($conn, $q2);
+                }
+                mysqli_query($conn, "DELETE FROM tbl_cart");
+                mysqli_query($conn, "UPDATE `tbl_pasien` SET `status`='finish' WHERE id_pasien = '$pasnam'");
+                $_SESSION['notifip'] = 'success';
+                header("Location: ../frontend/input_transaksi.php");
+                exit();
+            } else {
+                // Invalid credentials, show an error message
+                header("Location: ../frontend/input_transaksi.php");
+                exit();
+            }
         }
     }
 }

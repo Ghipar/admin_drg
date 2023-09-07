@@ -201,7 +201,7 @@ include('../../../conn.php');
                                                         <?php
                                                         while ($data = mysqli_fetch_array($ex)) {
                                                         ?>
-                                                            <input style="margin-left: 10px;width: 50px; font-weight: bold; color: red;" readonly="true" type="number" class="form-control-sm" id="idTran" name="idTran" value="<?php echo ($data['Auto_increment'])  ?>" required>
+                                                            <input style="margin-left: 10px;width: 80px; font-weight: bold; color: red;" readonly="true" type="number" class="form-control-sm" id="idTran" name="idTran" value="<?php echo ($data['Auto_increment'])  ?>" required>
                                                         <?php } ?>
                                                     </div>
                                                     <table style="margin-top: 20px;margin-bottom: 20px;" id="cart" class="table table-bordered table-striped">
@@ -282,10 +282,10 @@ include('../../../conn.php');
                                             </div>
                                             <div class="mb-3">
                                                 <label for="pesan" class="form-label">Keterangan</label>
-                                                <textarea style="text-transform: capitalize;" class="form-control" id="ket" name="ket" rows="4" placeholder="Masukkan keterangan" required></textarea>
+                                                <textarea style="text-transform: capitalize;" class="form-control" id="ket" name="ket" rows="4" placeholder="Masukkan keterangan"></textarea>
                                             </div>
 
-                                            <button style=" float: right;  margin-bottom: 20px;" type="submit" class="btn btn-primary">Kirim</button>
+                                            <button id="kukuk" style=" float: right;  margin-bottom: 20px;" type="submit" class="btn btn-primary">Kirim</button>
                                         </form>
                                     </div>
                                     <!-- /.card-body -->
@@ -598,6 +598,15 @@ include('../../../conn.php');
                 return false;
             return true;
         }
+    </script>
+    <script>
+        var input = document.getElementById("uang");
+        input.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("kukuk").click();
+            }
+        });
     </script>
 
     <?php if (isset($_SESSION['notifed'])) {
